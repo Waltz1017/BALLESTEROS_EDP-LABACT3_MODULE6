@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+    <h1>IT Seminar Registration</h1>
+    <form action="" id="registrationForm">
+        <section id="nameSection">
+            <label for="fullName">Full Name: </label>
+            <input type="text" name="fullName" id="fullName" class="input" required><br>
+            <span id="fullNameError" class="errorMessage"></span>
+            <hr>
+
+        </section>
+        <label for="studentNumber">Student Number: </label>
+        <input type="text" name="studentNumber" id="studentNumber" class="input" aria-describedby="student-help"
+            required><br>
+        <span id="studentNumberError" class="errorMessage"></span>
+
+        <p id="student-help">
+            Enter a valid student number (e.g. 12-2345-678).
+        </p>
+
+        <hr>
+
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" class="input" autocomplete="email" aria-describedby="email-help"
+            required><br>
+        <span id="emailError" class="errorMessage"></span>
+
+        <p id="email-help">
+            Enter a valid email address (e.g., name@example.com).
+        </p>
+
+        <hr>
+
+        <label for="mobileNumber">Mobile Number: </label>
+        <input type="tel" name="mobileNumber" id="mobileNumber" class="input" aria-describedby="mobile-help"
+            required><br>
+        <span id="mobileNumberError" class="errorMessage"></span>
+
+        <p id="mobile-help">
+            Enter a valid Phippine mobile number (e.g., 091234567 or +6391234567).
+        </p>
+
+        <hr>
+
+        <label for="password">Password: </label>
+        <input type="password" id="password" class="input" aria-describedby="password-help" required><br>
+        <span id="passwordError" class="errorMessage"></span>
+        <br>
+
+        <label for="confirmPassword">Confirm Password: </label>
+        <input type="password" id="confirmPassword" class="input" required><br>
+        <span id="confirmPasswordError" class="errorMessage"></span>
+
+        <p id="password-help">
+            at least eight characters, <br>
+            one uppercase letter, <br>
+            one digit, and one of @, $, or ! ; <br>
+            no whitespace.
+        </p>
+
+        <hr>
+
+        <select name="course" id="course" required>
+            <option value="">Select your course</option>
+            <option value="BSIT">BSIT</option>
+            <option value="BSCS">BSCS</option>
+        </select><br>
+        <span id="courseError" class="errorMessage"></span>
+        <br>
+
+        <hr>
+
+        <input type="checkbox" name="terms" id="terms" required>
+        <label for="terms">I agree with the terms and agreement.</label><br>
+        <span id="termsError" class="errorMessage"></span>
+        <br>
+
+        <hr>
+
+        <button id="registerBtn" aria-required="true">Register</button>
+        <button id="resetBtn" aria-required="true">Reset</button>
+    </form>
+
+    <section id="registrationSummary" hidden>
+        <h2>Registration Summary</h2>
+        <p>Full Name: <span id="summaryName"></span></p><br>
+        <p>Student Number: <span id="summaryStudentNumber"></span></p><br>
+        <p>Email: <span id="summaryEmail"></span></p><br>
+        <p>Mobile Number: <span id="summaryMobileNumber"></span></p><br>
+        <p>Course: <span id="summaryCourse"></span></p>
+    </section>
+</body>
+
+</html>
