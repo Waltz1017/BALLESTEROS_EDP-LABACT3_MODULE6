@@ -11,7 +11,7 @@
 
 <body>
     <h1>IT Seminar Registration</h1>
-    <form action="" id="registrationForm">
+    <form action="" id="registrationForm" novalidate>
         <section id="nameSection">
             <label for="fullName">Full Name: </label>
             <input type="text" name="fullName" id="fullName" class="input" required><br>
@@ -89,6 +89,8 @@
 
         <button id="registerBtn" aria-required="true">Register</button>
         <button id="resetBtn" type="button" aria-required="true">Reset</button>
+
+        <p id="successMessage" hidden></p>
     </form>
 
     <section id="registrationSummary" hidden>
