@@ -43,17 +43,11 @@ function validateStudentNumber(studentNumber) {
         return false;
     }
     studentNumberError.textContent = "";
-    return;
+    return true;
 };
 
 function isValidStudentNumber(value) {
     return /^\d{2}-\d{4}-\d{3}$/.test(value.trim());
-};
-
-function isValidPassword(value) {
-    return value.length >= 8 &&
-        /[A-Z]/.test(value) &&
-        /[0-9]/.test(value);
 };
 
 function validateEmail(email) {
@@ -97,9 +91,21 @@ function validatePassword(password) {
     } else if (!/[0-9]/.test(password)) {
         passwordError.textContent = "Add at least one number.";
         return false;
+    } else if (!/[@$!]/.test(password)) {
+        passwordError.textContent = "Add at least one of @, $, or !.";
+        return false;
+    } else if (/\s/.test(password)) {
+        passwordError.textContent = "Password must not contain spaces.";
+        return false;
     }
     passwordError.textContent = "";
     return true;
+};
+
+function isValidPassword(value) {
+    return value.length >= 8 &&
+        /[A-Z]/.test(value) &&
+        /[0-9]/.test(value);
 };
 
 function validateConfirmPassword(confirmPassword) {
@@ -134,18 +140,27 @@ function validateTerms() {
     }
     termsError.textContent = "";
     return true;
-};
+}
+terms.addEventListener("change", () => {
+    validateTerms(terms.checked);
+});
 
 
 registerBtn.addEventListener('click', function () {
-    validateName(fullName.value);
-    validateStudentNumber(studentNumber.value);
-    validateEmail(email.value);
-    validateMobileNumber(mobileNumber.value);
-    validatePassword(password.value);
-    validateConfirmPassword(confirmPassword.value);
-    validateCourse(course.value);
-    validateTerms(terms.value);
+    const results = [
+        validateName(fullName.value),
+        validateStudentNumber(studentNumber.value),
+        validateEmail(email.value),
+        validateMobileNumber(mobileNumber.value),
+        validatePassword(password.value),
+        validateConfirmPassword(confirmPassword.value),
+        validateCourse(),
+        validateTerms()
+    ];
+
+    if (results.includes(false)) {
+        e.preventDefault();
+    }
 });
 
 resetBtn.addEventListener('click', function () {
