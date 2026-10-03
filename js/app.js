@@ -1,3 +1,18 @@
+function isValidPassword(value) {
+    return value.length >= 8 &&
+        /[A-Z]/.test(value) &&
+        /[0-9]/.test(value) &&
+        /[@$!]/.test(value);
+};
+
+function isValidStudentNumber(value) {
+    return /^\d{2}-\d{4}-\d{3}$/.test(value.trim());
+};
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { isValidStudentNumber, isValidPassword };
+}
+
 const fullName = document.getElementById('fullName');
 const studentNumber = document.getElementById('studentNumber');
 const email = document.getElementById('email');
@@ -44,10 +59,6 @@ function validateStudentNumber(studentNumber) {
     }
     studentNumberError.textContent = "";
     return true;
-};
-
-function isValidStudentNumber(value) {
-    return /^\d{2}-\d{4}-\d{3}$/.test(value.trim());
 };
 
 function validateEmail(email) {
@@ -102,12 +113,6 @@ function validatePassword(password) {
     return true;
 };
 
-function isValidPassword(value) {
-    return value.length >= 8 &&
-        /[A-Z]/.test(value) &&
-        /[0-9]/.test(value);
-};
-
 function validateConfirmPassword(confirmPassword) {
     if (confirmPassword.trim() === "") {
         confirmPasswordError.textContent = "Please insert your password here.";
@@ -149,23 +154,22 @@ terms.addEventListener("change", () => {
     validateTerms(terms.checked);
 });
 
+// registerBtn.addEventListener('click', function (e) {
+//     const results = [
+//         validateName(fullName.value),
+//         validateStudentNumber(studentNumber.value),
+//         validateEmail(email.value),
+//         validateMobileNumber(mobileNumber.value),
+//         validatePassword(password.value),
+//         validateConfirmPassword(confirmPassword.value),
+//         validateCourse(),
+//         validateTerms()
+//     ];
 
-registerBtn.addEventListener('click', function (e) {
-    const results = [
-        validateName(fullName.value),
-        validateStudentNumber(studentNumber.value),
-        validateEmail(email.value),
-        validateMobileNumber(mobileNumber.value),
-        validatePassword(password.value),
-        validateConfirmPassword(confirmPassword.value),
-        validateCourse(),
-        validateTerms()
-    ];
-
-    if (results.includes(false)) {
-        e.preventDefault();
-    }
-});
+//     if (results.includes(false)) {
+//         e.preventDefault();
+//     }
+// });
 
 resetBtn.addEventListener('click', function () {
     document.querySelectorAll('.input').forEach(function (input) {
@@ -180,24 +184,40 @@ resetBtn.addEventListener('click', function () {
     terms.checked = false;
 });
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { isValidStudentNumber, isValidPassword };
-}
+
 
 document.getElementById('registrationForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
 
-    document.getElementById("summaryName").textContent = data.get("fullName");
-    document.getElementById("summaryStudentNumber").textContent = data.get("studentNumber");
-    document.getElementById("summaryEmail").textContent = data.get("email");
-    document.getElementById("summaryMobileNumber").textContent = data.get("mobileNumber");
+    // Run every validator so ALL errors show at once
+    const results = [
+        validateName(fullName.value),
+        validateStudentNumber(studentNumber.value),
+        validateEmail(email.value),
+        validateMobileNumber(mobileNumber.value),
+        validatePassword(password.value),
+        validateConfirmPassword(confirmPassword.value),
+        validateCourse(),
+        validateTerms()
+    ];
 
-    const selectedCourse = form.elements["course"];
-    const label = selectedCourse.options[selectedCourse.selectedIndex].text;
-    document.getElementById("summaryCourse").textContent = label;
+    // Stop here if anything failed: no success message, no summary
+    if (results.includes(false)) {
+        document.getElementById("successMessage").hidden = true;
+        document.getElementById("registrationSummary").hidden = true;
+        return;
+    }
+
+    // Everything is valid: show the summary using textContent
+    document.getElementById("summaryName").textContent = fullName.value.trim();
+    document.getElementById("summaryStudentNumber").textContent = studentNumber.value.trim();
+    document.getElementById("summaryEmail").textContent = email.value.trim();
+    document.getElementById("summaryMobileNumber").textContent = mobileNumber.value.trim();
+    document.getElementById("summaryCourse").textContent = course.value;
+
+    const success = document.getElementById("successMessage");
+    success.textContent = "Registration details validated successfully!";
+    success.hidden = false;
 
     document.getElementById("registrationSummary").hidden = false;
-    form.reset();
 });
