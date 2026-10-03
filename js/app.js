@@ -27,15 +27,19 @@ function validateName(name) {
         return false;
     }
     fullNameError.textContent = "";
-    return;
-};
+    return true;
+}
+
+fullName.addEventListener("blur", () => {
+    validateName(fullName.value);
+});
 
 function validateStudentNumber(studentNumber) {
     if (studentNumber.trim() === "") {
         studentNumberError.textContent = "Student Number cannot be empty.";
         return false;
     } else if (!/^\d{2}-\d{4}-\d{3}$/.test(studentNumber.trim())) {
-        studentNumberError.textContent = "Invalid Student Number.";
+        studentNumberError.textContent = "Enter a student number in the format 24-1234-123.";
         return false;
     }
     studentNumberError.textContent = "";
@@ -48,8 +52,8 @@ function isValidStudentNumber(value) {
 
 function isValidPassword(value) {
     return value.length >= 8 &&
-           /[A-Z]/.test(value) &&
-           /[0-9]/.test(value);
+        /[A-Z]/.test(value) &&
+        /[0-9]/.test(value);
 };
 
 function validateEmail(email) {
@@ -57,7 +61,7 @@ function validateEmail(email) {
         emailError.textContent = "Email cannot be empty.";
         return false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        emailError.textContent = "Please insert a valid email.";
+        emailError.textContent = "Please insert a valid email and follow the required format.";
         return false;
     }
     emailError.textContent = "";
@@ -117,7 +121,11 @@ function validateCourse() {
     }
     courseError.textContent = "";
     return true;
-};
+}
+
+course.addEventListener("change", () => {
+    validateCourse(course.value);
+});
 
 function validateTerms() {
     if (!terms.checked) {
@@ -161,7 +169,7 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.target;
     const data = new FormData(form);
-    
+
     document.getElementById("summaryName").textContent = data.get("fullName");
     document.getElementById("summaryStudentNumber").textContent = data.get("studentNumber");
     document.getElementById("summaryEmail").textContent = data.get("email");
@@ -170,7 +178,7 @@ document.getElementById('registrationForm').addEventListener('submit', (e) => {
     const selectedCourse = form.elements["course"];
     const label = selectedCourse.options[selectedCourse.selectedIndex].text;
     document.getElementById("summaryCourse").textContent = label;
-    
+
     document.getElementById("registrationSummary").hidden = false;
     form.reset();
 });
