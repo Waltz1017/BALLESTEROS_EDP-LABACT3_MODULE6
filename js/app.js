@@ -77,7 +77,7 @@ function validateMobileNumber(contactNumber) {
     if (contactNumber.trim() === "") {
         mobileNumberError.textContent = "Contact Number cannot be empty.";
         return false;
-    } else if (!/^(?:\+63|63|0)9\d{9}$/.test(contactNumber)) {
+    } else if (!/^(?:09|\+639)\d{9}$/.test(contactNumber.trim())) {
         mobileNumberError.textContent = "Invalid. Please use Philippine Number.";
         return false;
     }
@@ -153,23 +153,6 @@ function validateTerms() {
 terms.addEventListener("change", () => {
     validateTerms(terms.checked);
 });
-
-// registerBtn.addEventListener('click', function (e) {
-//     const results = [
-//         validateName(fullName.value),
-//         validateStudentNumber(studentNumber.value),
-//         validateEmail(email.value),
-//         validateMobileNumber(mobileNumber.value),
-//         validatePassword(password.value),
-//         validateConfirmPassword(confirmPassword.value),
-//         validateCourse(),
-//         validateTerms()
-//     ];
-
-//     if (results.includes(false)) {
-//         e.preventDefault();
-//     }
-// });
 
 resetBtn.addEventListener('click', function () {
     document.querySelectorAll('.input').forEach(function (input) {
