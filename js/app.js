@@ -119,6 +119,10 @@ function validateConfirmPassword(confirmPassword) {
     confirmPasswordError.textContent = "";
     return true;
 }
+confirmPassword.addEventListener("input", () => validateConfirmPassword(confirmPassword.value));
+password.addEventListener("input", () => {
+    if (confirmPassword.value !== "") validateConfirmPassword(confirmPassword.value);
+});
 
 function validateCourse() {
     if (course.value === "") {
@@ -146,7 +150,7 @@ terms.addEventListener("change", () => {
 });
 
 
-registerBtn.addEventListener('click', function () {
+registerBtn.addEventListener('click', function (e) {
     const results = [
         validateName(fullName.value),
         validateStudentNumber(studentNumber.value),
